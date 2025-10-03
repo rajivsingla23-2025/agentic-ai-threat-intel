@@ -194,8 +194,8 @@ with st.sidebar.expander("Sample Query Examples", expanded=False):
 <style>
 /* Shrink the expander title */
 .streamlit-expanderHeader {
-    font-size: 0.8rem !important;   /* smaller font size */
-    font-weight: 500 !important;    /* optional: make it less bold */
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
 }
 
 /* Ultra compact list for Query Examples */
@@ -214,6 +214,17 @@ with st.sidebar.expander("Sample Query Examples", expanded=False):
     background: #f7f7f7 !important;
     padding: 0.05rem 0.25rem !important;
     border-radius: 2px !important;
+}
+
+/* 🔴 Make Run Agent button text always red */
+div[data-testid="stSidebar"] button[kind="secondary"],
+div[data-testid="stSidebar"] button[kind="secondary"]:hover,
+div[data-testid="stSidebar"] button[kind="secondary"]:focus,
+div[data-testid="stSidebar"] button[kind="secondary"]:active {
+    color: #e63946 !important;       /* Red text */
+    font-weight: bold !important;
+    background-color: transparent !important; /* Keep normal background */
+    border: 1px solid #ddd !important;        /* Light border */
 }
 </style>
 <div class="query-examples">
@@ -277,6 +288,7 @@ st.download_button(
     "threat_intel_enriched.csv",
     "text/csv"
 )
+
 
 
 
