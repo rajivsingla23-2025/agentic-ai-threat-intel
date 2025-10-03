@@ -92,7 +92,6 @@ main .markdown-text-container ul { margin: 0.25rem 0 0.25rem 1rem !important; }
 </style>
 """, unsafe_allow_html=True)
 
-
 # Hide Streamlit's default multipage nav ("Pages") from the sidebar
 st.markdown("""
 <style>
@@ -101,17 +100,38 @@ section[data-testid="stSidebar"] [data-testid="stSidebarNav"] { display: none; }
 </style>
 """, unsafe_allow_html=True)
 
-# Auto-refresh every 15 minutes (900,000 ms)
-st_autorefresh(interval=15 * 60 * 1000, key="refresh_dashboard")
+if "refresh_count" not in st.session_state:
+    st.session_state["refresh_count"] = 0
+if "last_refresh" not in st.session_state:
+    st.session_state["last_refresh"] = datetime.now(timezone.utc)
 
+# --- Auto-refresh every 15 minutes (900_000 ms) ---
+# st_autorefresh returns the number of times it has triggered; we can use it to update metadata
+auto_count = st_autorefresh(interval=15 * 60 * 1000, key="auto_refresh")
+
+# If auto_count increments, update last_refresh (optional)
+if auto_count:
+    st.session_state["refresh_count"] += 1
+    st.session_state["last_refresh"] = datetime.now(timezone.utc)
+
+# --- Title and manual refresh controls ---
 st.title("🛡️ Cyber Threat Intelligence Dashboard 🛡️")
 
-# --- Manual Refresh Button ---
-if st.button("🔄 Refresh Now"):
-    try:
+cols = st.columns([0.15, 0.7, 0.15])  # layout tweak to keep the button near the top
+with cols[0]:
+    if st.button("🔄 Refresh Now"):
+        # increment counter and force a rerun -- experimental_rerun is the reliable call
+        st.session_state["refresh_count"] += 1
+        st.session_state["last_refresh"] = datetime.now(timezone.utc)
         st.rerun()
-    except AttributeError:
-        st.experimental_rerun()
+
+with cols[1]:
+    # show last refresh time in a compact format
+    last = st.session_state["last_refresh"]
+    st.markdown(f"**Last refresh:** {last.strftime('%Y-%m-%d %H:%M:%S UTC')}")
+    
+# Auto-refresh every 15 minutes (900,000 ms)
+st_autorefresh(interval=15 * 60 * 1000, key="refresh_dashboard")
 
 # -----------------------------
 # HELPERS (local)
@@ -288,6 +308,7 @@ st.download_button(
     "threat_intel_enriched.csv",
     "text/csv"
 )
+
 
 
 
