@@ -84,11 +84,11 @@ def _heuristic_plan(query: str) -> dict:
         "palo alto": ["Palo Alto Unit42"],
         "unit42": ["Palo Alto Unit42"],
         "crowdstrike": ["CrowdStrike"],
-        "mandiant": ["Mandiant"],
-        "google": ["Mandiant"],
+        "mandiant": ["Google Mandiant"],
+        "google": ["Google Mandiant"],
         "kaspersky": ["Kaspersky"],
-        "zdi": ["ZDI"],
-        "Trend Micro": ["ZDI"],
+        "zdi": ["Trend Micro ZDI"],
+        "Trend Micro": ["Trend Micro ZDI"],
     }
     vendors_detected = []
     for k, sources in VENDOR_MAP.items():
@@ -572,5 +572,6 @@ def run_agent(query: str, df, approve: bool = False) -> dict:
         "actions": actions,    # <- uses the risk-based list (not overwritten)
         "executed": executed,
     }
+
 
 
