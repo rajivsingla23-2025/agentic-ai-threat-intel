@@ -192,19 +192,25 @@ agent_query = st.sidebar.text_area(
 with st.sidebar.expander("Sample Query Examples", expanded=False):
     st.markdown("""
 <style>
+/* Shrink the expander title */
+.streamlit-expanderHeader {
+    font-size: 0.8rem !important;   /* smaller font size */
+    font-weight: 500 !important;    /* optional: make it less bold */
+}
+
 /* Ultra compact list for Query Examples */
 .query-examples ul {
-    list-style-position: inside !important;   /* move bullet inside */
+    list-style-position: inside !important;
     margin: 0.1rem 0 !important;
-    padding-left: 0rem !important;            /* no left padding */
+    padding-left: 0rem !important;
 }
 .query-examples li {
-    font-size: 0.75rem !important;            /* smaller font */
-    line-height: 1rem !important;             /* tighter spacing */
+    font-size: 0.7rem !important;
+    line-height: 1rem !important;
     margin: 0.1rem 0 !important;
 }
 .query-examples code {
-    font-size: 0.75rem !important;            /* inline code small */
+    font-size: 0.7rem !important;
     background: #f7f7f7 !important;
     padding: 0.05rem 0.25rem !important;
     border-radius: 2px !important;
@@ -271,5 +277,6 @@ st.download_button(
     "threat_intel_enriched.csv",
     "text/csv"
 )
+
 
 
