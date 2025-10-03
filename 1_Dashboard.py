@@ -188,13 +188,6 @@ agent_query = st.sidebar.text_area(
     value=st.session_state.get("agent_query", "Show CVEs with EPSS above 0.7 (High Risk) in last 14 days")
 )
 
-# Approve flag (sticky in session state)
-approve = st.sidebar.checkbox(
-    "Approve actions (Slack/Jira)",
-    value=st.session_state.get("agent_approve", False),
-    help="Leave unchecked to run in shadow mode"
-)
-
 # Sample Query Examples (static text)
 with st.sidebar.expander("Sample Query Examples", expanded=False):
     st.markdown("""
@@ -227,6 +220,13 @@ with st.sidebar.expander("Sample Query Examples", expanded=False):
 </ul>
 </div>
 """, unsafe_allow_html=True)
+
+# Approve flag (sticky in session state)
+approve = st.sidebar.checkbox(
+    "Approve actions (Slack/Jira)",
+    value=st.session_state.get("agent_approve", False),
+    help="Leave unchecked to run in shadow mode"
+)
 
 # Run button → goes to agent page
 if st.sidebar.button("Run Agent →"):
@@ -271,4 +271,5 @@ st.download_button(
     "threat_intel_enriched.csv",
     "text/csv"
 )
+
 
